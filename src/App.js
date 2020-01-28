@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import qs from "qs";
+import Users from "./components/Users";
+import Home from "./components/Home";
+import Nav from "./components/Nav";
+import { getHash } from "./utils/utils";
 
 function App() {
-	const getHash = () => {
-		return window.location.hash.slice(1);
-	};
-
 	const [params, setParams] = useState(qs.parse(getHash()));
 
 	useEffect(() => {
@@ -15,7 +15,14 @@ function App() {
 		});
 		setParams(qs.parse(getHash()));
 	}, []);
-	return <div></div>;
+
+	return (
+		<div>
+			<Nav />
+			{params.view === undefined && <Home />}
+			{params.view === "users" && <Users />}
+		</div>
+	);
 }
 
 export default App;
